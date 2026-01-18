@@ -1,0 +1,9 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+py_test(
+    name = "test_model",
+    srcs = ["test_model.py"],
+    deps = ["//src/model:model", "@pip//pytest",],
+    # Ensures tests run with the correct Python interpreter configured in MODULE.bazel
+    # python_version = "PY3", 
+)
