@@ -52,6 +52,21 @@ def test_formula_equality():
 
     assert formula1 == formula2
 
+def test_evaluation():
+     # Arrange p0 and p1 => not p2
+    p0: Formula = Atom(0)
+    p1: Formula = Atom(1)
+    p2: Formula = Atom(2)
+
+    left_formula = And(p0, p1)
+    right_formula = Not(p2)
+
+
+    formula = Impl(left_formula, right_formula)
+
+    assert formula.evaluate([0, 0, 0]) == True
+    assert formula.evaluate([1, 0, 1]) == False
+
 
 if __name__ == '__main__':
     sys.exit(pytest.main())

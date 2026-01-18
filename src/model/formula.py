@@ -33,7 +33,20 @@ class Formula:
                     return False
                 return self.data.left == value.data.left and self.data.right == value.data.right
 
+    def evaluate(self, valuation: list[int]) -> bool:
+        match self.formula_type:
+            case Type.FALSE:
+                return False
+            case Type.TRUE:
+                return True
+            case Type.ATOM:
+                return valuation[self.data]
+            case Type.NOT:
+                return not self.data.evaluate(valuation)
+            case Type.BINARY:
+                return self.data.evaluate(valuation)
 
+    
 class AtomData:
     def __init__(self) -> None:
         self.n = 0
@@ -77,6 +90,18 @@ class BinaryData:
     binary_type: Type = None
     left: Formula = None
     right: Formula = None
+
+    def evaluate(self, valuation: list[int]) -> bool:
+        left_value = self.left.evaluate(valuation)
+        right_value = self.right.evaluate(valuation)
+        if self.binary_type == BinaryData.Type.AND:
+            return left_value and right_value
+        elif self.binary_type == BinaryData.Type.OR:
+            return left_value or right_value
+        elif self.binary_type == BinaryData.Type.EQL:
+            return left_value == right_value
+        elif self.binary_type == BinaryData.Type.IMPL:
+            return not left_value or right_value
 
 
 def Not(formula: Formula) -> Formula:
