@@ -1,3 +1,4 @@
+from src.model.valuation import valuation
 import pytest
 import sys
 from src.model.formula import *
@@ -65,7 +66,21 @@ def test_evaluation():
     formula = Impl(left_formula, right_formula)
 
     assert formula.evaluate([0, 0, 0]) == True
-    assert formula.evaluate([1, 0, 1]) == False
+    assert formula.evaluate([1, 1, 1]) == False
+
+
+def test_valuation():
+    gen = valuation(3)
+
+    assert next(gen) == [False, False, False]
+    assert next(gen) == [False, False, True]
+    assert next(gen) == [False, True, False]
+    assert next(gen) == [False, True, True]
+    assert next(gen) == [True, False, False]
+    assert next(gen) == [True, False, True]
+    assert next(gen) == [True, True, False]
+    assert next(gen) == [True, True, True]
+
 
 
 if __name__ == '__main__':

@@ -2,6 +2,6 @@ load("@rules_python//python:defs.bzl", "py_library")
 
 py_library(
     name = "model",
-    srcs = ["formula.py"],
+    srcs = ["formula.py", "valuation.py"],
     visibility = ["//visibility:public"],
 )
