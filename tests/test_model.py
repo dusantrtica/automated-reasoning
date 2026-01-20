@@ -1,3 +1,5 @@
+from src.model.simplify import simplify
+from src.model.satisfy import atoms_count
 from src.model.valuation import valuation
 import pytest
 import sys
@@ -82,6 +84,54 @@ def test_valuation():
     assert next(gen) == [True, True, True]
 
 
+def test_atoms_count_formula_with_atmos():
+    # Arrange p0 and p1 => not p2
+    p0: Formula = Atom(0)
+    p1: Formula = Atom(1)
+    p2: Formula = Atom(2)
+
+    left_formula = And(p0, p1)
+    right_formula = Not(p2)
+
+
+    formula = Impl(left_formula, right_formula)
+
+    assert atoms_count(formula) == 3
+
+def test_atmos_count_formula_without_atoms():
+     # Arrange p0 and p1 => not p2
+    p0: Formula = Truthy()
+    p1: Formula = Falsy()
+    p2: Formula = Truthy()
+
+    left_formula = And(p0, p1)
+    right_formula = Not(p2)
+
+
+    formula = Impl(left_formula, right_formula)
+    assert atoms_count(formula) == 0
+
+def test_simplify_formula_with_implication():
+    # Arrange
+    # (T and Po) => (T or P1)
+    formula = Impl(And(Truthy(), Atom(0)), Or(Truthy(), Atom(1)))
+
+    # Act
+    simplified = simplify(formula)
+
+    # Assert
+    assert simplified == Truthy()
+
+def test_simplify_formula_with_implication_with_atoms():
+    # Arrange
+    # (T and Po) => (T or P1)
+    formula = Impl(And(Truthy(), Atom(0)), Or(Falsy(), Atom(1)))
+
+    # Act
+    simplified = simplify(formula)
+
+    # Assert simplified = P0 => P1
+    assert simplified == Impl(Atom(0), Atom(1))
 
 if __name__ == '__main__':
     sys.exit(pytest.main())
