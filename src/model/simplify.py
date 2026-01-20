@@ -99,3 +99,45 @@ def simplify(formula: Formula) -> Formula:
                     return simplify_eql(formula)
                 case BinaryData.Type.IMPL:
                     return simplify_impl(formula)
+
+def nnf_not(formula: Formula) -> Formula:
+    match formula.formula_type:
+        case Type.ATOM:
+            return Not(formula)
+        case Type.NOT:
+            return nnf(formula.data)
+        case Type.BINARY:
+            left = formula.data.left
+            right = formula.data.right
+
+            match formula.data.binary_type:
+                case BinaryData.Type.AND:
+                    return Or(nnf(Not(left)), nnf(Not(right)))
+                case BinaryData.Type.OR:
+                    return And(nnf(Not(left)), nnf(Not(right)))
+                case BinaryData.Type.IMPL:
+                    return And(nnf(left), nnf(Not(right)))
+                case BinaryData.Type.EQL:
+                    return Or(And(nnf(left), nnf(Not(right))), And(nnf(right), nnf(Not(left))))
+
+def nnf(formula: Formula) -> Formula:
+    match formula.formula_type:
+        case Type.ATOM | Type.TRUE | Type.FALSE:
+            return formula
+        case Type.NOT:
+            return nnf_not(formula.data)
+        case Type.BINARY:
+            left = formula.data.left
+            right = formula.data.right
+
+            match formula.data.binary_type:
+                case BinaryData.Type.AND:
+                    return And(nnf(left), nnf(right))
+                case BinaryData.Type.OR:
+                    return Or(nnf(left), nnf(right))
+                case BinaryData.Type.IMPL:
+                    return Or(nnf(Not(left)), nnf(right))
+                case BinaryData.Type.EQL:
+                    return And(Or(nnf(Not(left)), nnf(right)), Or(nnf(Not(right)), nnf(left)))
+        
+

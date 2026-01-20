@@ -1,4 +1,4 @@
-from src.model.simplify import simplify
+from src.model.simplify import simplify, nnf
 from src.model.satisfy import atoms_count
 from src.model.valuation import valuation
 import pytest
@@ -132,6 +132,37 @@ def test_simplify_formula_with_implication_with_atoms():
 
     # Assert simplified = P0 => P1
     assert simplified == Impl(Atom(0), Atom(1))
+
+def test_nnf_with_implication():
+    # Arrange: formula = p0 => p1
+    formula = Impl(Atom(0), Atom(1))
+
+    # Act
+    nnf_formula = nnf(formula)
+
+    # Assert nnf_formula == ~p0 | p1
+    assert nnf_formula == Or(Not(Atom(0)), Atom(1))
+
+def test_nnf_with_implication_and_negation_in_front():
+    # Arrange: formula = p0 => p1
+    formula = Not(Impl(Atom(0), Atom(1)))
+
+    # Act
+    nnf_formula = nnf(formula)
+
+    # Assert nnf_formula == ~p0 | p1
+    assert nnf_formula == And(Atom(0), Not(Atom(1)))
+
+def test_nnf_with_implication_and_double_negation_in_front():
+    # Arrange: formula = p0 => p1
+    formula = Not(Not(Impl(Atom(0), Atom(1))))
+
+    # Act
+    nnf_formula = nnf(formula)
+
+    # Assert nnf_formula == ~p0 | p1
+    assert nnf_formula == Or(Not(Atom(0)), Atom(1))
+
 
 if __name__ == '__main__':
     sys.exit(pytest.main())
