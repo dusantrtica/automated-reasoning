@@ -1,0 +1,104 @@
+{
+    "locations": [
+        {
+            "id": 1,
+            "name": "Trg",
+            "workingHours": "08:00-21:00"
+        },
+        {
+            "id": 2,
+            "name": "Sv. Nikole",
+            "workingHours": "10:00-16:00"
+        },
+        {
+            "id": 3,
+            "name": "Jagiceva",
+            "workingHours": "09:00-18:00"
+        }
+    ],
+    "classrooms": [
+        {
+            "id": 1,
+            "name": "BIM",
+            "locId": 1,
+            "hasComputers": 1,
+            "capacity": 30
+        },
+        {
+            "id": 1,
+            "name": "704",
+            "locId": 1,
+            "hasComputers": 0,
+            "capacity": 25
+        },
+        {
+            "id": 1,
+            "name": "840",
+            "locId": 1,
+            "hasComputers": 0,
+            "capacity": 30
+        },
+        {
+            "id": 1,
+            "name": "N250",
+            "locId": 2,
+            "hasComputers": 0,
+            "capacity": 25
+        },
+        {
+            "id": 1,
+            "name": "N251",
+            "locId": 2,
+            "hasComputers": 0,
+            "capacity": 20
+        },
+        {
+            "id": 1,
+            "name": "N252",
+            "locId": 2,
+            "hasComputers": 0,
+            "capacity": 25
+        },
+        {
+            "id": 1,
+            "name": "706",
+            "locId": 1,
+            "hasComputers": 1,
+            "capacity": 80
+        },
+        {
+            "id": 1,
+            "name": "718",
+            "locId": 1,
+            "hasComputers": 1,
+            "capacity": 30
+        },
+        {
+            "id": 1,
+            "name": "JAG1",
+            "locId": 3,
+            "hasComputers": 1,
+            "capacity": 20
+        },
+        {
+            "id": 1,
+            "name": "JAG2",
+            "locId": 1,
+            "hasComputers": 1,
+            "capacity": 30
+        },
+        {
+            "id": 1,
+            "name": "JAG3",
+            "locId": 1,
+            "hasComputers": 1,
+            "capacity": 15
+        }
+    ],
+    "classes": [
+        {}
+    ],
+    "students": [
+        {}
+    ]
+}
